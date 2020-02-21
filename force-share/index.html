@@ -6,21 +6,35 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <style>
+    #error {
+      margin: 12px auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      border: 1px solid slategray;
+      background: azure;
+      color: indianred;
+    }
+  </style>
 </head>
 <body>
+<div id="error"></div>
 <script>
   'use strict';
-
+  const qs = new URLSearchParams(location.search);
+  setTimeout(() => {
     const shareData = {
-      title: 'test',
-      text: 'Test text \n "XXX"',
-      url: 'https://cardsmobile.ru'
+      title: qs.get('title'),
+      text: qs.get('text'),
+      url: qs.get('url')
     };
 
     try {
       navigator.share(JSON.parse(JSON.stringify(shareData)));
     } catch (err) {
+      document.getElementById('error').textContent = err.toString();
     }
+  }, 100);
 </script>
 </body>
 </html>
