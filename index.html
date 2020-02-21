@@ -61,9 +61,9 @@
     };
 
     try {
-      navigator.share(JSON.stringify(JSON.parse(shareData)));
+      navigator.share(JSON.parse(JSON.stringify(shareData)));
     } catch (err) {
-      document.getElementById('error').textContent = JSON.stringify(err, null, 2);
+      document.getElementById('error').textContent = err.toString();
     }
   }
 </script>
