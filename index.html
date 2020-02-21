@@ -6,50 +6,52 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  <script>
-    'use strict';
-
-    customElements.define('share-btn', class extends HTMLElement {
-      constructor() {
-        super();
-        this.style.display = 'block';
-        this.style.margin = '12px auto';
-        this.style.width = '100px';
-        this.style.height = '42px';
-        this.style.lineHeight = '42px';
-        this.style.background = 'steelblue';
-        this.style.color = 'white';
-        this.style.textAlign = 'center';
-
-        this.addEventListener('click', () => this.share());
-      }
-
-      share() {
-        const shareData = {
-          title: this.getAttribute('title') || undefined,
-          text: this.getAttribute('text') || undefined,
-          url: this.getAttribute('url') || undefined
-        };
-
-        try {
-          navigator.share(JSON.stringify(JSON.parse(shareData)));
-        } catch (err) {
-
-        }
-      }
-    });
-  </script>
+  <style>
+    .share-btn {
+      display: block;
+      margin: 12px auto;
+      width: 100px;
+      height: 42px;
+      line-height: 42px;
+      background: steelblue;
+      color: white;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-<share-btn title="Заголовок сообщения Main"
-           text="Текст сообщения Main"
-           url="https://cardsmobile.ru">
+<div class="share-btn"
+     data-title="Заголовок сообщения Main"
+     data-text="Текст сообщения Main"
+     data-url="https://cardsmobile.ru">
   Share cardsmobile.ru
-</share-btn>
-<share-btn title="Заголовок сообщения Retail"
-           text="Текст сообщения Retail"
-           url="https://retail.cardsmobile.ru">
+</div>
+<div class="share-btn"
+     data-title="Заголовок сообщения Retail"
+     data-text="Текст сообщения Retail"
+     data-url="https://retail.cardsmobile.ru">
   Share retail.cardsmobile.ru
-</share-btn>
+</div>
+<script>
+  'use strict';
+
+  [...document.querySelectorAll('.share-btn')].forEach(btn => {
+    btn.addEventListener('click', () => share(btn));
+  });
+
+  function share(btn) {
+    const shareData = {
+      title: btn.getAttribute('title') || undefined,
+      text: btn.getAttribute('text') || undefined,
+      url: btn.getAttribute('url') || undefined
+    };
+
+    try {
+      navigator.share(JSON.stringify(JSON.parse(shareData)));
+    } catch (err) {
+
+    }
+  }
+</script>
 </body>
 </html>
