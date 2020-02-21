@@ -21,6 +21,15 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
+    #error {
+      margin: 12px auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      border: 1px solid slategray;
+      background: azure;
+      color: indianred;
+    }
   </style>
 </head>
 <body>
@@ -36,6 +45,7 @@
      data-url="https://retail.cardsmobile.ru">
   Share retail.cardsmobile.ru
 </div>
+<div id="error"></div>
 <script>
   'use strict';
 
@@ -45,15 +55,15 @@
 
   function share(btn) {
     const shareData = {
-      title: btn.getAttribute('title') || undefined,
-      text: btn.getAttribute('text') || undefined,
-      url: btn.getAttribute('url') || undefined
+      title: btn.getAttribute('data-title') || undefined,
+      text: btn.getAttribute('data-text') || undefined,
+      url: btn.getAttribute('data-url') || undefined
     };
 
     try {
       navigator.share(JSON.stringify(JSON.parse(shareData)));
     } catch (err) {
-
+      document.getElementById('error').textContent = JSON.stringify(err, null, 2);
     }
   }
 </script>
